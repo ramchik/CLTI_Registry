@@ -9,13 +9,10 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "outDir": "dist/main",
-    "rootDir": "src/main",
+    "rootDir": "src",
     "sourceMap": true,
-    "baseUrl": ".",
-    "paths": {
-      "@shared/*": ["src/shared/*"]
-    }
+    "baseUrl": "."
   },
   "include": ["src/main/**/*", "src/shared/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/shared/*.test.ts"]
 }

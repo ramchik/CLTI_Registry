@@ -98,8 +98,8 @@ export function updatePatient(db: Database.Database, id: string, updates: Partia
 
   for (const field of fields) {
     auditLog(db, user, 'update', 'patients', id, field,
-      String((current as Record<string, unknown>)[field]),
-      String((updates as Record<string, unknown>)[field]));
+      String((current as unknown as Record<string, unknown>)[field]),
+      String((updates as unknown as Record<string, unknown>)[field]));
   }
 }
 

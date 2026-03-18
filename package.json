@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Offline Infrainguinal Bypass Registry for CLTI — ESVS/GVG compliant",
   "type": "module",
-  "main": "dist/main/index.js",
+  "main": "dist/main/main/index.js",
   "scripts": {
     "dev": "concurrently \"npm run dev:main\" \"npm run dev:renderer\"",
     "dev:main": "tsc -p tsconfig.main.json --watch",
@@ -11,25 +11,58 @@
     "build": "npm run build:main && npm run build:renderer",
     "build:main": "tsc -p tsconfig.main.json",
     "build:renderer": "vite build",
-    "start": "electron dist/main/index.js",
+    "start": "electron dist/main/main/index.js",
+    "postinstall": "electron-builder install-app-deps",
     "test": "vitest run",
     "test:watch": "vitest",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "package:win": "electron-builder --win",
-    "package:mac": "electron-builder --mac",
-    "package:linux": "electron-builder --linux"
+    "package:win": "npm run build && electron-builder --win",
+    "package:mac": "npm run build && electron-builder --mac",
+    "package:linux": "npm run build && electron-builder --linux",
+    "package:all": "npm run build && electron-builder --win --mac --linux"
   },
   "build": {
     "appId": "com.clti.bypass-registry",
     "productName": "CLTI Bypass Registry",
+    "copyright": "Copyright © 2026 CLTI Bypass Registry",
+    "directories": {
+      "output": "release"
+    },
     "files": [
-      "dist/**/*",
-      "node_modules/**/*"
+      "dist/**/*"
+    ],
+    "asarUnpack": [
+      "node_modules/better-sqlite3/**"
     ],
     "win": {
-      "target": "nsis",
-      "icon": "assets/icon.ico"
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "assets/icon.ico",
+      "artifactName": "${productName}-${version}-Setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "allowElevation": true,
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "installerHeaderIcon": "assets/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "CLTI Bypass Registry"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-Portable.${ext}"
     },
     "mac": {
       "target": "dmg",
