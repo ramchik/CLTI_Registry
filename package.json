@@ -2,7 +2,6 @@
   "name": "clti-bypass-registry",
   "version": "1.0.0",
   "description": "Offline Infrainguinal Bypass Registry for CLTI — ESVS/GVG compliant",
-  "type": "module",
   "main": "dist/main/main/index.js",
   "scripts": {
     "dev": "concurrently \"npm run dev:main\" \"npm run dev:renderer\"",
@@ -46,7 +45,6 @@
           "arch": ["x64"]
         }
       ],
-      "icon": "assets/icon.ico",
       "artifactName": "${productName}-${version}-Setup.${ext}"
     },
     "nsis": {
@@ -54,9 +52,6 @@
       "perMachine": false,
       "allowToChangeInstallationDirectory": true,
       "allowElevation": true,
-      "installerIcon": "assets/icon.ico",
-      "uninstallerIcon": "assets/icon.ico",
-      "installerHeaderIcon": "assets/icon.ico",
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "CLTI Bypass Registry"
@@ -65,18 +60,11 @@
       "artifactName": "${productName}-${version}-Portable.${ext}"
     },
     "mac": {
-      "target": "dmg",
-      "icon": "assets/icon.icns"
+      "target": "dmg"
     },
     "linux": {
       "target": "AppImage"
-    },
-    "extraResources": [
-      {
-        "from": "drizzle",
-        "to": "drizzle"
-      }
-    ]
+    }
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.8",
